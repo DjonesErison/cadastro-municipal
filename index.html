@@ -53,7 +53,7 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                             <i class="fa-solid fa-phone text-sm"></i>
                         </span>
-                        <input type="tel" id="telefone" required value="(87) 98805-" maxlength="15"
+                        <input type="tel" id="telefone" required placeholder="(87) 98805-XXXX" maxlength="15"
                             oninput="aplicarMascaraTelefone(this)"
                             class="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition font-medium text-slate-800">
                     </div>
@@ -151,18 +151,25 @@
         function aplicarMascaraTelefone(input) {
             let value = input.value.replace(/\D/g, "");
             
-            if (!value.startsWith("87")) {
-                value = "87" + value.replace(/^87/, "");
-            }
             if (value.length > 11) value = value.slice(0, 11);
 
             let ddd = value.slice(0, 2);
             let parte1 = value.slice(2, 7);
             let parte2 = value.slice(7, 11);
 
-            let formatted = `(${ddd})`;
-            if (parte1) formatted += ` ${parte1}`;
-            if (parte2) formatted += `-${parte2}`;
+            let formatted = "";
+            if (ddd) {
+                formatted = `(${ddd}`;
+                if (value.length >= 2) {
+                    formatted += `) `;
+                }
+            }
+            if (parte1) {
+                formatted += parte1;
+            }
+            if (parte2) {
+                formatted += `-${parte2}`;
+            }
 
             input.value = formatted;
         }
@@ -202,14 +209,14 @@
             btn.disabled = false;
             btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Confirmar Cadastro</span>`;
             document.getElementById('cadForm').reset();
-            document.getElementById('telefone').value = "(87) 98805-";
+            document.getElementById('telefone').value = "";
             document.getElementById('cadForm').classList.add('hidden');
             document.getElementById('msgSucesso').classList.remove('hidden');
         }
 
         function novoCadastro() {
             document.getElementById('cadForm').classList.remove('hidden');
-            document.getElementById('telefone').value = "(87) 98805-";
+            document.getElementById('telefone').value = "";
             document.getElementById('msgSucesso').classList.add('hidden');
         }
     </script>
