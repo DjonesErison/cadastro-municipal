@@ -60,13 +60,14 @@
                     <p class="text-[11px] text-slate-400 mt-1">Formato obrigatório: (xx) xxxxx-xxxx</p>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">E-mail *</label>
+                <!-- Campo de E-mail oculto por padrão (pode ser exibido se necessário) -->
+                <div id="grupoEmail" class="hidden">
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">E-mail</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                             <i class="fa-regular fa-envelope text-sm"></i>
                         </span>
-                        <input type="email" id="email" required placeholder="nome@exemplo.com" 
+                        <input type="email" id="email" placeholder="nome@exemplo.com" 
                             class="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
                     </div>
                 </div>
@@ -87,6 +88,7 @@
                             <option value="Assessor">Assessor</option>
                             <option value="Coordenador">Coordenador</option>
                             <option value="Chefe de Setor">Chefe de Setor</option>
+                            <option value="Acesso de Comunicação">Acesso de Comunicação</option>
                             <option value="Servidor Efetivo">Servidor Efetivo</option>
                             <option value="Servidor Comissionado">Servidor Comissionado</option>
                             <option value="Estagiário / Colaborador">Estagiário / Colaborador</option>
@@ -171,10 +173,11 @@
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Enviando...</span>`;
 
+            const campoEmail = document.getElementById('email');
             const payload = {
                 nome: document.getElementById('nome').value.trim(),
                 telefone: document.getElementById('telefone').value.trim(),
-                email: document.getElementById('email').value.trim(),
+                email: campoEmail ? campoEmail.value.trim() : "",
                 cargo: document.getElementById('cargo').value,
                 secretaria: document.getElementById('secretaria').value
             };
