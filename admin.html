@@ -95,9 +95,8 @@
     </footer>
 
     <script>
-        // Insira o link atualizado do seu Web App do Google Apps Script aqui:
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmzQKejZO-V1wJKenNotpxwJYbwh7cie6j1a8c4MpLVcpxbdatmaIoKu-eluk4ENsz/exec";
-        
+
         let listaGlobalCadastros = [];
 
         async function carregarDados() {
@@ -167,14 +166,10 @@
                 return;
             }
 
-            // Cria um workbook principal
             const wb = XLSX.utils.book_new();
-
-            // Aba Geral
             const wsGeral = XLSX.utils.json_to_sheet(listaGlobalCadastros);
             XLSX.utils.book_append_sheet(wb, wsGeral, "Geral");
 
-            // Agrupa por Secretaria para criar abas separadas
             const secretariasMap = {};
             listaGlobalCadastros.forEach(item => {
                 const sec = item.secretaria || "Outros";
@@ -183,7 +178,6 @@
             });
 
             for (const [secName, itens] of Object.entries(secretariasMap)) {
-                // Nome das abas no Excel tem limite de 31 caracteres
                 const nomeAba = secName.substring(0, 31).replace(/[\/?*[\]]/g, "");
                 const wsSec = XLSX.utils.json_to_sheet(itens);
                 XLSX.utils.book_append_sheet(wb, wsSec, nomeAba);
@@ -228,7 +222,6 @@
             doc.save("Relatorio_Cadastros.pdf");
         }
 
-        // Carrega os dados automaticamente ao abrir a página
         window.onload = carregarDados;
     </script>
 </body>
